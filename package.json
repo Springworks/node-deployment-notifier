@@ -1,0 +1,37 @@
+{
+  "name": "deployment-notifier",
+  "version": "1.0.0",
+  "description": "Sends notifications about deployments for a Git repo",
+  "private": false,
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "rm -rf lib && babel src --out-dir lib",
+    "test": "NODE_ENV=test istanbul cover _mocha",
+    "lint": "eslint .",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
+  },
+  "bin": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Springworks/node-deployment-notifier.git"
+  },
+  "author": "Springworks",
+  "bugs": {
+    "url": "https://github.com/Springworks/node-deployment-notifier/issues"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@springworks/test-harness": "1.0.3",
+    "babel-eslint": "^4.1.2",
+    "coveralls": "^2.11.4",
+    "eslint": "1.5.1",
+    "eslint-config-springworks": "3.1.1",
+    "eslint-plugin-mocha": "1.0.0",
+    "eslint-plugin-should-promised": "^1.0.5",
+    "istanbul": "^0.3.21",
+    "babel": "^5.8.23",
+    "mocha": "^2.3.3"
+  }
+}
