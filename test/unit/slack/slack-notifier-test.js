@@ -54,11 +54,11 @@ describe(__filename, () => {
       });
 
       it('should resolve Promise', () => {
-        return slack_notifier.internals.sendDeploymentMessage(mock_slack_instance, username, channel, message, attachments).should.be.fulfilled();
+        return slack_notifier.internals.sendDeploymentMessage({ slack_instance: mock_slack_instance, username, channel }, message, attachments).should.be.fulfilled();
       });
 
       it('should send proper message to slack instance', () => {
-        return slack_notifier.internals.sendDeploymentMessage(mock_slack_instance, username, channel, message, attachments)
+        return slack_notifier.internals.sendDeploymentMessage({ slack_instance: mock_slack_instance, username, channel }, message, attachments)
             .then(() => {
               send_message_stub.should.have.callCount(1);
               const send_args = send_message_stub.getCall(0).args;

@@ -42,7 +42,7 @@ describe(__filename, function() {
         });
 
         it('should resolve promise once done', () => {
-          return git_service.internals.getChangesSinceTag(mock_child_process, tag_name).should.be.fulfilledWith(result_str);
+          return git_service.internals.getChangesSinceTag({ child_process: mock_child_process }, tag_name).should.be.fulfilledWith(result_str);
         });
 
         it('should invoke exec() with the correct command', () => {
@@ -53,7 +53,7 @@ describe(__filename, function() {
             '--no-merges',
             '--reverse',
           ];
-          return git_service.internals.getChangesSinceTag(mock_child_process, tag_name)
+          return git_service.internals.getChangesSinceTag({ child_process: mock_child_process }, tag_name)
               .then(() => {
                 execute_command_stub.should.have.callCount(1);
 
@@ -72,7 +72,7 @@ describe(__filename, function() {
         });
 
         it('should reject promise', () => {
-          return git_service.internals.getChangesSinceTag(mock_child_process, tag_name).should.be.rejected();
+          return git_service.internals.getChangesSinceTag({ child_process: mock_child_process }, tag_name).should.be.rejected();
         });
 
       });
@@ -94,7 +94,7 @@ describe(__filename, function() {
         });
 
         it('should resolve promise once done', () => {
-          return git_service.internals.getLatestAuthorName(mock_child_process, tag_name).should.be.fulfilledWith(result_str);
+          return git_service.internals.getLatestAuthorName({ child_process: mock_child_process }, tag_name).should.be.fulfilledWith(result_str);
         });
 
         it('should invoke exec() with the correct command', () => {
@@ -103,7 +103,7 @@ describe(__filename, function() {
             '--pretty=format:%an',
             '-1',
           ];
-          return git_service.internals.getLatestAuthorName(mock_child_process, tag_name)
+          return git_service.internals.getLatestAuthorName({ child_process: mock_child_process }, tag_name)
               .then(() => {
                 execute_command_stub.should.have.callCount(1);
 

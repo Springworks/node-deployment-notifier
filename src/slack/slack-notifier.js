@@ -4,12 +4,12 @@ const internals = {};
 exports.create = function(webhook_url, username, channel) {
   const slack_instance = new Slack(webhook_url);
   return {
-    sendDeploymentMessage: internals.sendDeploymentMessage.bind(null, slack_instance, username, channel),
+    sendDeploymentMessage: internals.sendDeploymentMessage.bind(null, { slack_instance, username, channel }),
   };
 };
 
 
-internals.sendDeploymentMessage = function(slack_instance, username, channel, message, opt_attachments) {
+internals.sendDeploymentMessage = function({ slack_instance, username, channel }, message, opt_attachments) {
   const send_options = {
     text: message,
     channel,

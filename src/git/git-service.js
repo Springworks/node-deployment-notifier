@@ -3,13 +3,13 @@ const internals = {};
 
 exports.create = function(child_process) {
   return {
-    getChangesSinceTag: internals.getChangesSinceTag.bind(null, child_process),
-    getLatestAuthorName: internals.getLatestAuthorName.bind(null, child_process),
+    getChangesSinceTag: internals.getChangesSinceTag.bind(null, { child_process }),
+    getLatestAuthorName: internals.getLatestAuthorName.bind(null, { child_process }),
   };
 };
 
 
-internals.getChangesSinceTag = function(child_process, tag_name) {
+internals.getChangesSinceTag = function({ child_process }, tag_name) {
   const git_command_args = [
     'log',
     '--pretty=format:"- %s"',
@@ -26,7 +26,7 @@ internals.getChangesSinceTag = function(child_process, tag_name) {
 };
 
 
-internals.getLatestAuthorName = function(child_process) {
+internals.getLatestAuthorName = function({ child_process }) {
   const git_command_args = [
     'log',
     '--pretty=format:%an',
@@ -41,7 +41,7 @@ internals.getLatestAuthorName = function(child_process) {
 };
 
 
-internals.executeCommand = function(child_process, git_command_args) {
+internals.executeCommand = function({ child_process }, git_command_args) {
   return new Promise((resolve, reject) => {
     const spawned_process = child_process.spawn('git', git_command_args);
     let stdout_str = '';

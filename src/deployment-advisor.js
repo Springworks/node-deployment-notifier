@@ -2,12 +2,12 @@ const internals = {};
 
 exports.create = function(git_service, slack_notifier) {
   return {
-    suggestDeployment: internals.suggestDeployment.bind(null, git_service, slack_notifier),
+    suggestDeployment: internals.suggestDeployment.bind(null, { git_service, slack_notifier }),
   };
 };
 
 
-internals.suggestDeployment = function(git_service, slack_notifier, app_name, latest_tag_name) {
+internals.suggestDeployment = function({ git_service, slack_notifier }, app_name, latest_tag_name) {
   return git_service
       .getChangesSinceTag(latest_tag_name)
       .then(changelog => {

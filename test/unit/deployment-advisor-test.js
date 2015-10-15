@@ -4,6 +4,7 @@ describe(__filename, function() {
   let sinon_sandbox;
   let mock_git_service;
   let mock_slack_notifier;
+  let dependencies;
 
   beforeEach(() => {
     sinon_sandbox = sinon.sandbox.create();
@@ -24,6 +25,8 @@ describe(__filename, function() {
       sendDeploymentMessage() {
       },
     };
+
+    dependencies = { git_service: mock_git_service, slack_notifier: mock_slack_notifier };
   });
 
   describe('create', () => {
@@ -57,11 +60,11 @@ describe(__filename, function() {
         });
 
         it('should resolve promise', () => {
-          return deployment_advisor.internals.suggestDeployment(mock_git_service, mock_slack_notifier, app_name, latest_tag_name).should.be.fulfilled();
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name).should.be.fulfilled();
         });
 
         it('should send message to Slack notifier', () => {
-          return deployment_advisor.internals.suggestDeployment(mock_git_service, mock_slack_notifier, app_name, latest_tag_name)
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name)
               .then(() => {
                 send_deployment_message_stub.should.have.callCount(1);
                 const message_arg = send_deployment_message_stub.getCall(0).args[0];
@@ -83,7 +86,7 @@ describe(__filename, function() {
         });
 
         it('should reject promise', () => {
-          return deployment_advisor.internals.suggestDeployment(mock_git_service, mock_slack_notifier, app_name, latest_tag_name).should.be.rejected();
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name).should.be.rejected();
         });
 
       });
@@ -104,7 +107,7 @@ describe(__filename, function() {
         });
 
         it('should reject promise', () => {
-          return deployment_advisor.internals.suggestDeployment(mock_git_service, mock_slack_notifier, app_name, latest_tag_name).should.be.rejected();
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name).should.be.rejected();
         });
 
       });
