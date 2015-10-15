@@ -14,7 +14,7 @@ internals.suggestDeployment = function({ git_service, slack_notifier }, app_name
         return git_service
             .getLatestAuthorName()
             .then(last_author => {
-              const attachments = [internals.generateDeploymentSuggestionSlackAttachment(changelog)];
+              const attachments = [internals.generateDeploymentSuggestionSlackAttachment(changelog, latest_tag_name)];
               const message = `Hey, *${last_author}*. Might be a good time to deploy *${app_name}*. :rocket:`;
               return slack_notifier.sendDeploymentMessage(message, attachments);
             });
@@ -26,12 +26,12 @@ internals.suggestDeployment = function({ git_service, slack_notifier }, app_name
 };
 
 
-internals.generateDeploymentSuggestionSlackAttachment = function(changelog) {
+internals.generateDeploymentSuggestionSlackAttachment = function(changelog, latest_tag_name) {
   return {
     fallback: changelog,
     fields: [
       {
-        title: 'Changes',
+        title: `Changes since ${latest_tag_name}`,
         value: changelog,
         short: false,
       },
