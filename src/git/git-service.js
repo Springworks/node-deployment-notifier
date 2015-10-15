@@ -66,8 +66,13 @@ internals.executeCommand = function(child_process, git_command_args) {
 };
 
 
-internals.unquotedString = function(str) {
-  return String(str).replace(/(^")|("$)/g, '');
+internals.unquotedString = function(buffer_or_str) {
+  const string = String(buffer_or_str);
+  const replaced_surrounding_quotes = string
+      .split('\n')
+      .map(str => str.replace(/(^")|("$)/g, ''))
+      .join('\n');
+  return replaced_surrounding_quotes;
 };
 
 
