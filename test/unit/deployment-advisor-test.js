@@ -40,19 +40,22 @@ describe(__filename, function() {
 
   describe('internals.suggestDeployment', () => {
 
-    describe('with valid app_name, latest_tag_name', () => {
+    describe('with valid app_name, latest_tag_name, deployment_url', () => {
       const app_name = 'awe-some-app';
       const latest_tag_name = 'v1.0.1';
+      const author_name = 'John Doe';
+      const deployment_url = 'http://www.deploy.com/now';
+      const changelog = 'These are all the changes';
 
       describe('when dependencies succeed', () => {
         let send_deployment_message_stub;
 
         beforeEach(function mockChangelog() {
-          sinon_sandbox.stub(mock_git_service, 'getChangesSinceTag').returns(Promise.resolve('These are all the changes'));
+          sinon_sandbox.stub(mock_git_service, 'getChangesSinceTag').returns(Promise.resolve(changelog));
         });
 
         beforeEach(function mockLastAuthor() {
-          sinon_sandbox.stub(mock_git_service, 'getLatestAuthorName').returns(Promise.resolve('John Doe'));
+          sinon_sandbox.stub(mock_git_service, 'getLatestAuthorName').returns(Promise.resolve(author_name));
         });
 
         beforeEach(function mockSendMessage() {
@@ -60,19 +63,32 @@ describe(__filename, function() {
         });
 
         it('should resolve promise', () => {
-          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name).should.be.fulfilled();
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name, deployment_url).should.be.fulfilled();
         });
 
         it('should send message to Slack notifier', () => {
-          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name)
-              .then(() => {
-                send_deployment_message_stub.should.have.callCount(1);
-                const message_arg = send_deployment_message_stub.getCall(0).args[0];
-                const attachments_arg = send_deployment_message_stub.getCall(0).args[1];
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name, deployment_url).then(() => {
+            send_deployment_message_stub.should.have.callCount(1);
+          });
+        });
 
-                message_arg.should.eql('Hey, *John Doe*. Might be a good time to deploy *awe-some-app*. :rocket:');
+        it('should have correct message, with link included', () => {
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name, deployment_url)
+              .then(() => {
+                const message_arg = send_deployment_message_stub.getCall(0).args[0];
+                message_arg.should.eql(`Hey, *${author_name}*. Might be a good time to deploy *${app_name}*.` +
+                                       '\n' +
+                                       `:rocket: ${deployment_url}`);
+              });
+        });
+
+        it('should only define changelog as attachment', () => {
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name, deployment_url)
+              .then(() => {
+                const attachments_arg = send_deployment_message_stub.getCall(0).args[1];
                 attachments_arg.should.be.instanceOf(Array);
                 attachments_arg.should.have.length(1);
+                attachments_arg[0].fallback.should.eql(changelog, 'Verify that changelog is used');
               });
         });
 
@@ -86,7 +102,7 @@ describe(__filename, function() {
         });
 
         it('should reject promise', () => {
-          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name).should.be.rejected();
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name, deployment_url).should.be.rejected();
         });
 
       });
@@ -107,7 +123,7 @@ describe(__filename, function() {
         });
 
         it('should reject promise', () => {
-          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name).should.be.rejected();
+          return deployment_advisor.internals.suggestDeployment(dependencies, app_name, latest_tag_name, deployment_url).should.be.rejected();
         });
 
       });
