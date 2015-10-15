@@ -8,11 +8,11 @@ exports.run = function(process) {
       .parse(process.argv);
 
   console.log('');
-  console.log('Suggesting deployment for %j in app %j', program.tagName, program.appName);
+  console.log('Suggesting deployment in app %j (latest deployment: %j)', program.appName, program.latestDeploymentTag);
   console.log('');
 
   const notifier = deployment_notifier.create(process.env);
-  notifier.suggestDeployment(program.appName, program.tagName)
+  notifier.suggestDeployment(program.appName, program.latestDeploymentTag)
       .then(() => {
         console.log('Done!');
         process.exit(0);
