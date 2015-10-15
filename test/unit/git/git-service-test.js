@@ -129,6 +129,15 @@ describe(__filename, function() {
 
     });
 
+    describe('with multiline string, each surrounded by quotes', () => {
+      const str = '"- foo "baz""\n"- bar"';
+
+      it('should strip quotes', () => {
+        git_service.internals.unquotedString(str).should.eql('- foo "baz"\n- bar');
+      });
+
+    });
+
   });
 
 });

@@ -121,12 +121,12 @@ describe(__filename, function() {
     describe('with valid changelog', () => {
       const changelog = '-This\n-Is\n-Changing';
       it('should define attachment as required by Slack', () => {
-        const attachment = deployment_advisor.internals.generateDeploymentSuggestionSlackAttachment(changelog);
+        const attachment = deployment_advisor.internals.generateDeploymentSuggestionSlackAttachment(changelog, 'v1.0.0');
         attachment.should.eql({
           fallback: changelog,
           fields: [
             {
-              title: 'Changes',
+              title: 'Changes since v1.0.0',
               value: changelog,
               short: false,
             },
