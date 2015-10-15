@@ -9,7 +9,7 @@ exports.create = function(git_service, slack_notifier) {
 
 internals.suggestDeployment = function({ git_service, slack_notifier }, app_name, latest_tag_name, deployment_url) {
   return git_service
-      .getChangesSinceTag(latest_tag_name)
+      .getChangesBetweenTags(latest_tag_name)
       .then(changelog => {
         return git_service
             .getLatestAuthorName()

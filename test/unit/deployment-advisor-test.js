@@ -44,7 +44,7 @@ describe(__filename, function() {
         let send_deployment_message_stub;
 
         beforeEach(function mockChangelog() {
-          sinon_sandbox.stub(mock_git_service, 'getChangesSinceTag').returns(Promise.resolve(changelog));
+          sinon_sandbox.stub(mock_git_service, 'getChangesBetweenTags').returns(Promise.resolve(changelog));
         });
 
         beforeEach(function mockLastAuthor() {
@@ -90,8 +90,8 @@ describe(__filename, function() {
       describe('when git_service fails', () => {
 
         beforeEach(function mockChangelog() {
-          const err = new Error('Mocked getChangesSinceTag error');
-          sinon_sandbox.stub(mock_git_service, 'getChangesSinceTag').returns(Promise.reject(err));
+          const err = new Error('Mocked getChangesBetweenTags error');
+          sinon_sandbox.stub(mock_git_service, 'getChangesBetweenTags').returns(Promise.reject(err));
         });
 
         it('should reject promise', () => {
@@ -103,7 +103,7 @@ describe(__filename, function() {
       describe('when only slack_notifier fails', () => {
 
         beforeEach(function mockChangelog() {
-          sinon_sandbox.stub(mock_git_service, 'getChangesSinceTag').returns(Promise.resolve('These are all the changes'));
+          sinon_sandbox.stub(mock_git_service, 'getChangesBetweenTags').returns(Promise.resolve('These are all the changes'));
         });
 
         beforeEach(function mockLastAuthor() {
@@ -111,7 +111,7 @@ describe(__filename, function() {
         });
 
         beforeEach(function mockFailedSendMessage() {
-          const err = new Error('Mocked getChangesSinceTag error');
+          const err = new Error('Mocked getChangesBetweenTags error');
           sinon_sandbox.stub(mock_slack_notifier, 'sendDeploymentMessage').returns(Promise.reject(err));
         });
 

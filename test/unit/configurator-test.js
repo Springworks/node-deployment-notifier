@@ -10,36 +10,49 @@ describe(__filename, () => {
       env = internals.createValidEnvVars();
     });
 
-    describe('with all env vars provided', () => {
+    describe('env vars', () => {
 
-      it('should return configuration', () => {
-        const config = configurator.create(env);
-        config.should.eql({
-          slack_webhook_url: env.NODE_DEPLOYMENT_NOTIFIER_SLACK_WEBHOOK_URL,
-          slack_username: env.NODE_DEPLOYMENT_NOTIFIER_SLACK_USERNAME,
-          slack_channel: env.NODE_DEPLOYMENT_NOTIFIER_SLACK_CHANNEL,
+      describe('with all vars provided', () => {
+
+        it('should return configuration', () => {
+          const config = configurator.create(env);
+          config.should.eql({
+            slack: {
+              webhook_url: env.NODE_DEPLOYMENT_NOTIFIER_SLACK_WEBHOOK_URL,
+              username: env.NODE_DEPLOYMENT_NOTIFIER_SLACK_USERNAME,
+              channel: env.NODE_DEPLOYMENT_NOTIFIER_SLACK_CHANNEL,
+            },
+            webhook: {
+              url: env.NODE_DEPLOYMENT_NOTIFIER_WEBHOOK_URL,
+              basic_auth: {
+                username: env.NODE_DEPLOYMENT_NOTIFIER_WEBHOOK_BASIC_AUTH_USERNAME,
+                password: env.NODE_DEPLOYMENT_NOTIFIER_WEBHOOK_BASIC_AUTH_PASSWORD,
+              },
+            },
+          });
         });
+
       });
 
-    });
+      describe('missing required variable', () => {
+        const required_variables = [
+          'NODE_DEPLOYMENT_NOTIFIER_SLACK_WEBHOOK_URL',
+          'NODE_DEPLOYMENT_NOTIFIER_SLACK_USERNAME',
+          'NODE_DEPLOYMENT_NOTIFIER_SLACK_CHANNEL',
+        ];
 
-    describe('missing required variable', () => {
-      const required_variables = [
-        'NODE_DEPLOYMENT_NOTIFIER_SLACK_WEBHOOK_URL',
-        'NODE_DEPLOYMENT_NOTIFIER_SLACK_USERNAME',
-        'NODE_DEPLOYMENT_NOTIFIER_SLACK_CHANNEL',
-      ];
+        required_variables.forEach(param => {
 
-      required_variables.forEach(param => {
+          describe(`missing ${param}`, () => {
 
-        describe(`missing ${param}`, () => {
+            beforeEach(() => {
+              delete env[param];
+            });
 
-          beforeEach(() => {
-            delete env[param];
-          });
+            it('should fail with error', () => {
+              (() => configurator.create(env)).should.throw();
+            });
 
-          it('should fail with error', () => {
-            (() => configurator.create(env)).should.throw();
           });
 
         });
@@ -52,11 +65,15 @@ describe(__filename, () => {
 
 });
 
+
 internals.createValidEnvVars = function() {
   return {
     NODE_DEPLOYMENT_NOTIFIER_SLACK_WEBHOOK_URL: 'http://hook.com',
     NODE_DEPLOYMENT_NOTIFIER_SLACK_USERNAME: 'Mr Bot',
     NODE_DEPLOYMENT_NOTIFIER_SLACK_CHANNEL: '#deployments',
-    OTHER_VAR: 'should be ignored',
+    NODE_DEPLOYMENT_NOTIFIER_WEBHOOK_URL: 'http://hook.com',
+    NODE_DEPLOYMENT_NOTIFIER_WEBHOOK_BASIC_AUTH_USERNAME: 'secret-user',
+    NODE_DEPLOYMENT_NOTIFIER_WEBHOOK_BASIC_AUTH_PASSWORD: 'secret-pass',
+    EXCESSIVE_VAR: 'should be ignored',
   };
 };

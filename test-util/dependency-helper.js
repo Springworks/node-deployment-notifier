@@ -1,6 +1,6 @@
 exports.mockGitService = function() {
   return {
-    getChangesSinceTag() {
+    getChangesBetweenTags() {
     },
     getLatestAuthorName() {
     },
@@ -9,6 +9,14 @@ exports.mockGitService = function() {
 
 
 exports.mockSlackNotifier = function() {
+  return {
+    sendDeploymentMessage() {
+    },
+  };
+};
+
+
+exports.mockWebhookNotifier = function() {
   return {
     sendDeploymentMessage() {
     },
