@@ -3,24 +3,24 @@ const internals = {};
 
 exports.create = function(child_process) {
   return {
-    getChangesSinceTag: internals.getChangesSinceTag.bind(null, { child_process }),
+    getChangesBetweenTags: internals.getChangesBetweenTags.bind(null, { child_process }),
     getLatestAuthorName: internals.getLatestAuthorName.bind(null, { child_process }),
   };
 };
 
 
-internals.getChangesSinceTag = function({ child_process }, tag_name) {
+internals.getChangesBetweenTags = function({ child_process }, from_tag_name, to_tag_name = 'HEAD') {
   const git_command_args = [
     'log',
     '--pretty=format:"- %s"',
-    `${tag_name}..HEAD`,
+    `${from_tag_name}..${to_tag_name}`,
     '--no-merges',
     '--reverse',
   ];
   return internals
       .executeCommand(child_process, git_command_args)
       .catch(err => {
-        console.error('getChangesSinceTag failed: %j', err);
+        console.error('getChangesBetweenTags failed: %j', err);
         throw err;
       });
 };

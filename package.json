@@ -24,9 +24,11 @@
     "url": "https://github.com/Springworks/node-deployment-notifier/issues"
   },
   "dependencies": {
+    "@springworks/input-validator": "^3.1.2",
+    "babel": "^5.8.23",
     "commander": "^2.9.0",
     "node-slack": "0.0.7",
-    "babel": "^5.8.23"
+    "request": "^2.65.0"
   },
   "devDependencies": {
     "@springworks/test-harness": "1.2.0",
