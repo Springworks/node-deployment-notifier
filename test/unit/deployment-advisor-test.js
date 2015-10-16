@@ -1,4 +1,5 @@
 const deployment_advisor = require('../../src/deployment-advisor');
+const dependency_helper = require('../../test-util/dependency-helper');
 
 describe(__filename, function() {
   let sinon_sandbox;
@@ -15,16 +16,8 @@ describe(__filename, function() {
   });
 
   beforeEach(function mockDependencies() {
-    mock_git_service = {
-      getChangesSinceTag() {
-      },
-      getLatestAuthorName() {
-      },
-    };
-    mock_slack_notifier = {
-      sendDeploymentMessage() {
-      },
-    };
+    mock_git_service = dependency_helper.mockGitService();
+    mock_slack_notifier = dependency_helper.mockSlackNotifier();
 
     dependencies = { git_service: mock_git_service, slack_notifier: mock_slack_notifier };
   });
