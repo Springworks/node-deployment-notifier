@@ -28,9 +28,10 @@ Includes changelog (since last deployment).
 
   Options:
 
-    -h, --help                 output usage information
-    -N, --app-name <app name>  Application name
-    -T, --tag-name <git tag>   Name of tag marking latest deployment
+    -h, --help                             output usage information
+    -N, --app-name <app name>              Application name
+    -T, --latest-deployment-tag <git tag>  Name of tag for latest deployment
+    -U, --deploy-url <url>                 URL where a deployment can be started
 ```
 
 **Example**
