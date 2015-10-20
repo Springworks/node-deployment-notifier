@@ -13,7 +13,8 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "bin": {
-    "deployment-suggestion": "./bin/deployment-suggestion.js"
+    "deployment-suggestion": "./bin/deployment-suggestion.js",
+    "deployment-completed": "./bin/deployment-completed.js"
   },
   "repository": {
     "type": "git",
