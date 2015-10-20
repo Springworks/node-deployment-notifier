@@ -1,6 +1,6 @@
 {
   "name": "deployment-notifier",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Sends notifications about deployments for a Git repo",
   "private": false,
   "license": "MIT",
