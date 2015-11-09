@@ -73,7 +73,7 @@ describe(__filename, function() {
                   const message_arg = send_deployment_message_stub.getCall(0).args[0];
                   message_arg.should.eql(`Hey, *${author_name}*. Might be a good time to deploy *${app_name}*.` +
                                          '\n' +
-                                         `:rocket: ${deployment_url}`);
+                                         `:package: ${deployment_url}`);
                 });
           });
 
