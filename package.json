@@ -25,21 +25,21 @@
     "url": "https://github.com/Springworks/node-deployment-notifier/issues"
   },
   "dependencies": {
-    "@springworks/input-validator": "^3.1.2",
-    "babel": "^5.8.23",
-    "commander": "^2.9.0",
+    "@springworks/input-validator": "3.1.2",
+    "babel": "5.8.23",
+    "commander": "2.9.0",
     "node-slack": "0.0.7",
-    "request": "^2.65.0"
+    "request": "2.65.0"
   },
   "devDependencies": {
     "@springworks/test-harness": "1.2.0",
-    "babel-eslint": "^4.1.2",
-    "coveralls": "^2.11.4",
+    "babel-eslint": "4.1.2",
+    "coveralls": "2.11.4",
     "eslint": "1.5.1",
     "eslint-config-springworks": "3.1.1",
     "eslint-plugin-mocha": "1.0.0",
-    "eslint-plugin-should-promised": "^1.0.5",
-    "istanbul": "^0.3.21",
-    "mocha": "^2.3.3"
+    "eslint-plugin-should-promised": "1.0.5",
+    "istanbul": "0.3.21",
+    "mocha": "2.3.3"
   }
 }
