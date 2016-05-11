@@ -6,4 +6,3 @@ reporting:
     print: summary
     reports:
         - lcov
-        - teamcity

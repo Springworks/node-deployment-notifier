@@ -1,6 +1,5 @@
 {
   "name": "deployment-notifier",
-  "version": "1.2.4",
   "description": "Sends notifications about deployments for a Git repo",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -9,23 +8,13 @@
     "build": "rm -rf lib && babel src --out-dir lib",
     "test": "NODE_ENV=test istanbul cover _mocha",
     "lint": "eslint .",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "commit": "commit-wizard"
   },
   "bin": {
     "deployment-suggestion": "./bin/deployment-suggestion.js",
     "deployment-completed": "./bin/deployment-completed.js"
-  },
-  "engines": {
-    "node": ">=4",
-    "npm": ">=2.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Springworks/node-deployment-notifier.git"
-  },
-  "author": "Springworks",
-  "bugs": {
-    "url": "https://github.com/Springworks/node-deployment-notifier/issues"
   },
   "dependencies": {
     "@springworks/input-validator": "4.0.12",
@@ -49,6 +38,25 @@
     "eslint-plugin-should-promised": "1.0.8",
     "eslint-plugin-springworks": "2.0.1",
     "istanbul": "1.0.0-alpha.2",
-    "mocha": "2.4.5"
+    "mocha": "2.4.5",
+    "pre-git": "3.8.4",
+    "semantic-release": "4.3.5"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": "conventional"
+    }
+  },
+  "engines": {
+    "node": ">=4",
+    "npm": ">=2.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Springworks/node-deployment-notifier.git"
+  },
+  "author": "Springworks",
+  "bugs": {
+    "url": "https://github.com/Springworks/node-deployment-notifier/issues"
   }
 }
