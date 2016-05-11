@@ -1,7 +1,7 @@
 const deployment_recorder = require('../../src/deployment-recorder');
 const dependency_helper = require('../../test-util/dependency-helper');
 
-describe('test/unit/deployment-recorder-test.js', function() {
+describe('test/unit/deployment-recorder-test.js', () => {
   let sinon_sandbox;
   let mock_git_service;
   let mock_slack_notifier;
@@ -52,11 +52,11 @@ describe('test/unit/deployment-recorder-test.js', function() {
         get_changes_since_tag_stub = sinon_sandbox.stub(mock_git_service, 'getChangesBetweenTags').returns(Promise.resolve(changelog));
       });
 
-      beforeEach(function mockSendSlackMessage() {
+      beforeEach('mockSendSlackMessage', () => {
         send_slack_deployment_message_stub = sinon_sandbox.stub(mock_slack_notifier, 'sendDeploymentMessage').returns(Promise.resolve(null));
       });
 
-      beforeEach(function mockSendWebhookMessage() {
+      beforeEach('mockSendWebhookMessage', () => {
         send_webhook_deployment_message_stub = sinon_sandbox.stub(mock_webhook_notifier, 'sendDeploymentMessage').returns(Promise.resolve(null));
       });
 
