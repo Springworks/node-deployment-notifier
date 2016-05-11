@@ -2,7 +2,6 @@
   "name": "deployment-notifier",
   "version": "1.2.4",
   "description": "Sends notifications about deployments for a Git repo",
-  "private": false,
   "license": "MIT",
   "main": "./lib/index.js",
   "scripts": {
@@ -17,8 +16,8 @@
     "deployment-completed": "./bin/deployment-completed.js"
   },
   "engines": {
-    "node": ">=4.2.2",
-    "npm": ">=3.3.12"
+    "node": ">=4",
+    "npm": ">=2.7"
   },
   "repository": {
     "type": "git",
