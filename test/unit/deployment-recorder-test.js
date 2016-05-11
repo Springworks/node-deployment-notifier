@@ -1,7 +1,7 @@
 const deployment_recorder = require('../../src/deployment-recorder');
 const dependency_helper = require('../../test-util/dependency-helper');
 
-describe(__filename, function() {
+describe('test/unit/deployment-recorder-test.js', function() {
   let sinon_sandbox;
   let mock_git_service;
   let mock_slack_notifier;

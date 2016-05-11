@@ -1,7 +1,7 @@
 const deployment_advisor = require('../../src/deployment-advisor');
 const dependency_helper = require('../../test-util/dependency-helper');
 
-describe(__filename, function() {
+describe('test/unit/deployment-advisor-test.js', function() {
   let sinon_sandbox;
   let mock_git_service;
   let mock_slack_notifier;

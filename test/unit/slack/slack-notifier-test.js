@@ -1,6 +1,6 @@
 const slack_notifier = require('../../../src/slack/slack-notifier');
 
-describe(__filename, () => {
+describe('test/unit/slack/slack-notifier-test.js', () => {
   let sinon_sandbox;
 
   beforeEach(() => {

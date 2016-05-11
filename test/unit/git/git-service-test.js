@@ -1,6 +1,6 @@
 const git_service = require('../../../src/git/git-service');
 
-describe(__filename, function() {
+describe('test/unit/git/git-service-test.js', function() {
   const mock_child_process = {};
   let sinon_sandbox;
 

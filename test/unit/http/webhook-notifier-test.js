@@ -1,6 +1,6 @@
 const webhook_notifier = require('../../../src/http/webhook-notifier');
 
-describe(__filename, () => {
+describe('test/unit/http/webhook-notifier-test.js', () => {
   const webhook_url = 'https://internet.com';
   const basic_auth = {
     username: 'user',
