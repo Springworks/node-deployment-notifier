@@ -1,6 +1,6 @@
 const git_service = require('../../../src/git/git-service');
 
-describe(__filename, function() {
+describe('test/unit/git/git-service-test.js', () => {
   const mock_child_process = {};
   let sinon_sandbox;
 
@@ -37,7 +37,7 @@ describe(__filename, function() {
       describe('when exec() succeeds', () => {
         const result_str = 'This is the change';
 
-        beforeEach(function mockSuccessfulCommand() {
+        beforeEach('mockSuccessfulCommand', () => {
           execute_command_stub = sinon_sandbox.stub(git_service.internals, 'executeCommand').returns(Promise.resolve(result_str));
         });
 
@@ -66,7 +66,7 @@ describe(__filename, function() {
 
       describe('when exec() fails', () => {
 
-        beforeEach(function mockFailingExecuteCommand() {
+        beforeEach('mockFailingExecuteCommand', () => {
           const err = new Error('Mocked exec() error');
           execute_command_stub = sinon_sandbox.stub(git_service.internals, 'executeCommand').returns(Promise.reject(err));
         });
@@ -87,7 +87,7 @@ describe(__filename, function() {
       describe('when exec() succeeds', () => {
         const result_str = 'This is the change';
 
-        beforeEach(function mockSuccessfulCommand() {
+        beforeEach('mockSuccessfulCommand', () => {
           execute_command_stub = sinon_sandbox.stub(git_service.internals, 'executeCommand').returns(Promise.resolve(result_str));
         });
 
@@ -123,7 +123,7 @@ describe(__filename, function() {
       describe('when exec() succeeds', () => {
         const result_str = 'John Doe';
 
-        beforeEach(function mockSuccessfulCommand() {
+        beforeEach('mockSuccessfulCommand', () => {
           execute_command_stub = sinon_sandbox.stub(git_service.internals, 'executeCommand').returns(Promise.resolve(result_str));
         });
 

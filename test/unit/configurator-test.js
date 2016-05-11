@@ -1,7 +1,7 @@
 const configurator = require('../../src/configurator');
 const internals = {};
 
-describe(__filename, () => {
+describe('test/unit/configurator-test.js', () => {
 
   describe('create', () => {
     let env;

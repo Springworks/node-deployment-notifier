@@ -1,6 +1,6 @@
 const webhook_notifier = require('../../../src/http/webhook-notifier');
 
-describe(__filename, () => {
+describe('test/unit/http/webhook-notifier-test.js', () => {
   const webhook_url = 'https://internet.com';
   const basic_auth = {
     username: 'user',
@@ -68,7 +68,7 @@ describe(__filename, () => {
       describe('when request succeeds', () => {
         let send_request_stub;
 
-        beforeEach(function mockSendRequest() {
+        beforeEach('mockSendRequest', () => {
           const mock_response = {};
           const mock_body = {};
           send_request_stub = sinon_sandbox.stub(webhook_notifier.internals, 'sendRequest').callsArgWithAsync(2, null, mock_response, mock_body);
@@ -108,7 +108,7 @@ describe(__filename, () => {
 
       describe('when request fails with error status code', () => {
 
-        beforeEach(function mockFailedSendRequest() {
+        beforeEach('mockFailedSendRequest', () => {
           const mock_response = { statusCode: 404 };
           const mock_body = {};
           sinon_sandbox.stub(webhook_notifier.internals, 'sendRequest').callsArgWithAsync(2, null, mock_response, mock_body);
@@ -123,7 +123,7 @@ describe(__filename, () => {
 
       describe('when request fails with error', () => {
 
-        beforeEach(function mockFailedSendRequest() {
+        beforeEach('mockFailedSendRequest', () => {
           const mock_err = new Error('Mocked timeout');
           sinon_sandbox.stub(webhook_notifier.internals, 'sendRequest').callsArgWithAsync(2, mock_err, null, null);
         });

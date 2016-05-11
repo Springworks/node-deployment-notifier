@@ -8,18 +8,17 @@ exports.create = function(git_service, slack_notifier) {
 
 
 internals.suggestDeployment = function({ git_service, slack_notifier }, app_name, latest_tag_name, deployment_url) {
-  return git_service
-      .getChangesBetweenTags(latest_tag_name)
+  return git_service.getChangesBetweenTags(latest_tag_name)
       .then(changelog => {
-        if (changelog) {
-          return git_service
-              .getLatestAuthorName()
-              .then(last_author => {
-                const attachments = [internals.generateDeploymentSuggestionSlackAttachment(changelog, latest_tag_name)];
-                const message = `Hey, *${last_author}*. Might be a good time to deploy *${app_name}*.\n:package: ${deployment_url}`;
-                return slack_notifier.sendDeploymentMessage(message, attachments);
-              });
+        if (!changelog) {
+          return null;
         }
+        return git_service.getLatestAuthorName()
+            .then(last_author => {
+              const attachments = [internals.generateDeploymentSuggestionSlackAttachment(changelog, latest_tag_name)];
+              const message = `Hey, *${last_author}*. Might be a good time to deploy *${app_name}*.\n:package: ${deployment_url}`;
+              return slack_notifier.sendDeploymentMessage(message, attachments);
+            });
       })
       .catch(err => {
         console.error('suggestDeployment failed', err);

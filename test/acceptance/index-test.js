@@ -1,6 +1,6 @@
 const index = require('../../src');
 
-describe(__filename, () => {
+describe('test/acceptance/index-test.js', () => {
 
   describe('index', () => {
     const mock_process = {
