@@ -6,15 +6,18 @@ exports.create = function(git_service, slack_notifier, webhook_notifier) {
   };
 };
 
-internals.recordDeployment = function({ git_service, slack_notifier, webhook_notifier }, app_name, previous_tag_name, current_tag_name, target_environment) {
-  return git_service
-      .getChangesBetweenTags(previous_tag_name, current_tag_name)
-      .then(changelog => {
-        return Promise.all([
-          internals.sendSlackMessage(slack_notifier, app_name, previous_tag_name, current_tag_name, changelog, target_environment),
-          webhook_notifier.sendDeploymentMessage(app_name, current_tag_name, target_environment, changelog),
-        ]);
-      });
+internals.recordDeployment = async function({ git_service, slack_notifier, webhook_notifier }, app_name, previous_tag_name, current_tag_name, message, target_environment) {
+  let changelog;
+  if (message) {
+    changelog = message;
+  }
+  else {
+    changelog = await git_service.getChangesBetweenTags(previous_tag_name, current_tag_name);
+  }
+  return Promise.all([
+    internals.sendSlackMessage(slack_notifier, app_name, previous_tag_name, current_tag_name, changelog, target_environment),
+    webhook_notifier.sendDeploymentMessage(app_name, current_tag_name, target_environment, changelog),
+  ]);
 };
 
 
