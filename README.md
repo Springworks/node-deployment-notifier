@@ -69,6 +69,7 @@ Includes changes in the new version.
 
     -h, --help                               output usage information
     -N, --app-name <app name>                Application name
+    -M, --message <release notes>            Release notes (required unless providing tags)
     -P, --previous-deployment-tag <git tag>  Name of tag for previous deployment
     -T, --deployment-tag <git tag>           Name of tag for latest deployment
     -E, --environment <target environment>   The environment deployment was targeted at

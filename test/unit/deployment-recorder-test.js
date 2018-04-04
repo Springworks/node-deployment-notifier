@@ -66,7 +66,7 @@ describe('test/unit/deployment-recorder-test.js', () => {
         const current_tag_name = 'v1.0.1';
 
         it('should get version diff changelog from git service', () => {
-          return deployment_recorder.internals.recordDeployment(dependencies, app_name, previous_tag_name, current_tag_name, target_environment)
+          return deployment_recorder.internals.recordDeployment(dependencies, app_name, previous_tag_name, current_tag_name, undefined, target_environment)
               .then(() => {
                 get_changes_since_tag_stub.should.have.callCount(1);
 
@@ -80,7 +80,7 @@ describe('test/unit/deployment-recorder-test.js', () => {
         });
 
         it('should send message to slack notifier', () => {
-          return deployment_recorder.internals.recordDeployment(dependencies, app_name, previous_tag_name, current_tag_name, target_environment)
+          return deployment_recorder.internals.recordDeployment(dependencies, app_name, previous_tag_name, current_tag_name, undefined, target_environment)
               .then(() => {
                 const message_arg = send_slack_deployment_message_stub.getCall(0).args[0];
                 message_arg.should.eql(`Deployed new version of *${app_name}* to ${target_environment}! :rocket:`);
@@ -88,7 +88,7 @@ describe('test/unit/deployment-recorder-test.js', () => {
         });
 
         it('should send message to webhook', () => {
-          return deployment_recorder.internals.recordDeployment(dependencies, app_name, previous_tag_name, current_tag_name, target_environment)
+          return deployment_recorder.internals.recordDeployment(dependencies, app_name, previous_tag_name, current_tag_name, undefined, target_environment)
               .then(() => {
                 const call_args = send_webhook_deployment_message_stub.getCall(0).args;
                 const app_name_arg = call_args[0];
@@ -102,6 +102,30 @@ describe('test/unit/deployment-recorder-test.js', () => {
                 changelog_arg.should.eql(changelog);
               });
         });
+
+      });
+
+      describe('providing app_name, message, current_tag_name (no previous tag)', () => {
+        const app_name = 'my-app';
+        const message = 'This is a great release with:\n-Foo\n-Bar';
+        const current_tag_name = 'v1.0.1';
+
+        it('should send message to webhook', () => {
+          return deployment_recorder.internals.recordDeployment(dependencies, app_name, undefined, current_tag_name, message, target_environment)
+              .then(() => {
+                const call_args = send_webhook_deployment_message_stub.getCall(0).args;
+                const app_name_arg = call_args[0];
+                const revision_arg = call_args[1];
+                const environment_arg = call_args[2];
+                const changelog_arg = call_args[3];
+
+                app_name_arg.should.eql(app_name);
+                revision_arg.should.eql(current_tag_name);
+                environment_arg.should.eql(target_environment);
+                changelog_arg.should.eql(message);
+              });
+        });
+
 
       });
 
