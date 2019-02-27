@@ -1,8 +1,8 @@
-const Slack = require('node-slack');
+const { IncomingWebhook } = require('@slack/client');
 const internals = {};
 
 exports.create = function(webhook_url, username, channel) {
-  const slack_instance = new Slack(webhook_url);
+  const slack_instance = new IncomingWebhook(webhook_url);
   return {
     sendDeploymentMessage: internals.sendDeploymentMessage.bind(null, { slack_instance, username, channel }),
   };
