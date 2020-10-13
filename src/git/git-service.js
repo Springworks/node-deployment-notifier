@@ -20,7 +20,7 @@ internals.getChangesBetweenTags = function({ child_process }, from_tag_name, to_
   return internals
       .executeCommand(child_process, git_command_args)
       .catch(err => {
-        console.error('getChangesBetweenTags failed: %s', err);
+        console.error('getChangesBetweenTags failed:', err);
         throw err;
       });
 };
@@ -35,7 +35,7 @@ internals.getLatestAuthorName = function({ child_process }) {
   return internals
       .executeCommand(child_process, git_command_args)
       .catch(err => {
-        console.error('getLatestAuthorName failed: %s', err);
+        console.error('getLatestAuthorName failed:', err);
         throw err;
       });
 };

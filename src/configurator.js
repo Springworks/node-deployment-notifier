@@ -38,7 +38,7 @@ internals.validateEnvVars = function(env_vars) {
     return input_validator.validateSchema(env_vars, env_vars_validation_schema, null, options_to_allow_excessive_env_vars);
   }
   catch (err) {
-    console.error('validateEnvVars failed: %j', err);
+    console.error('validateEnvVars failed:', err);
     throw err;
   }
 };
