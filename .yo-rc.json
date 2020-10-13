@@ -1,7 +1,0 @@
-{
-  "generator-springworks": {
-    "projectName": "deployment-notifier",
-    "projectDescription": "Sends notifications about deployments for a Git repo",
-    "privateProject": false
-  }
-}
